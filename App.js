@@ -1,10 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import MainTabNavigator from "./components/MainTabNavigator";
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
       <MainTabNavigator />
     </NavigationContainer>
   );
-}
+};
+
+export default App;
