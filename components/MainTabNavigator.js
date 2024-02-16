@@ -5,6 +5,7 @@ import TherapistsScreen from "../screens/TherapistsScreen";
 import ForumsScreen from "../screens/ForumsScreen";
 import ExercisesScreen from "../screens/ExercisesScreen";
 import { Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 

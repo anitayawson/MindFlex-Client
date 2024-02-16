@@ -16,6 +16,8 @@ module.exports = {
         mindflexLightGreen: "#E9F9DC",
         mindflexLightOrange: "#F09E54",
         mindflexTeal: "#A0E3E2",
+        mindflexPurple: "#AEAFF7",
+        mindflexDarkGreen: "#57B894",
       },
     },
   },
