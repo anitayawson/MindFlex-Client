@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { useState } from "react";
+import { View, Text, TouchableOpacity, ScrollView, Modal } from "react-native";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import ContentSvg from "../assets/icons/content.svg";
 import HappySvg from "../assets/icons/happy.svg";
@@ -11,8 +11,19 @@ import GratefulSvg from "../assets/icons/grateful.svg";
 import TiredSvg from "../assets/icons/tired.svg";
 import SadSvg from "../assets/icons/sad.svg";
 import UnsureSvg from "../assets/icons/unsure.svg";
+import ReflectionModal from "../components/ReflectionModal";
 
 const HomeScreen = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const openReflectionModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeReflectionModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View className="flex-1 px-6 pt-16">
       {/* Header */}
@@ -95,17 +106,24 @@ const HomeScreen = () => {
         </ScrollView>
       </View>
 
-      <TouchableOpacity className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-6 h-14 shadow-xl">
+      <TouchableOpacity
+        onPress={openReflectionModal}
+        className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-6 h-14 shadow-xl"
+      >
         <Feather name="edit-3" size={22} color="white" />
-        <Text className="text-white ml-2">Write a Reflection</Text>
+        <Text className="text-white ml-2 font-semibold">
+          Write a Reflection
+        </Text>
       </TouchableOpacity>
 
-      {/* <Text className="text-base mt-6">Your Exercise Of The Day</Text>
-      <View className="mt-4 bg-gray-300 w-full h-32 rounded-xl"></View>
-
-      <View className="mt-4 bg-gray-300 w-full h-32 rounded-xl">
-        <Text>Did you know</Text>
-      </View> */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={closeReflectionModal}
+      >
+        <ReflectionModal closeModal={closeReflectionModal} />
+      </Modal>
     </View>
   );
 };

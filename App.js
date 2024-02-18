@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
-import MainTabNavigator from "./components/MainTabNavigator";
-import DrawerNavigator from "./components/DrawerNavigator";
+import MainTabNavigator from "./navigators/MainTabNavigator";
+import DrawerNavigator from "./navigators/DrawerNavigator";
 
 const App = () => {
   return (
