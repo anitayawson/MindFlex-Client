@@ -1,10 +1,33 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { FlatList, Text, TouchableOpacity, View, Image } from "react-native";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import FeaturedBlogsCarousel from "../components/FeaturedBlogsCarousel";
-import LatestBlogsCarousel from "../components/LatestBlogsCarousel";
-import { FEATURED_BLOGS, LATEST_BLOGS } from "../data/index";
+import LatestBlogsList from "../components/LatestBlogsList";
+// import { FEATURED_BLOGS, LATEST_BLOGS } from "../data/index";
+import { useNavigation } from "@react-navigation/native";
 
 const BlogScreen = () => {
+  const [featuredBlogs, setFeaturedBlogs] = useState([]);
+  const [latestBlogs, setLatestBlogs] = useState([]);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/blogs");
+        const data = response.data;
+
+        setFeaturedBlogs(data.slice(0, 3));
+        setLatestBlogs(data.slice(3));
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
   return (
     <View>
       <View className="bg-mindflexGreen h-56 rounded-b-3xl px-6">
@@ -12,14 +35,10 @@ const BlogScreen = () => {
           <TouchableOpacity onPress={() => {}}>
             <Ionicons name="menu" size={30} color="#ffffff" />
           </TouchableOpacity>
-
           <View className="flex-row items-center gap-4">
             <TouchableOpacity className="bg-white/[0.2] p-2 rounded-lg">
               <Feather name="search" size={24} color="white" />
             </TouchableOpacity>
-            {/* <TouchableOpacity className="bg-white/[0.2] p-2 rounded-lg">
-              <Ionicons name="bookmark-outline" size={24} color="white" />
-            </TouchableOpacity> */}
           </View>
         </View>
         <Text className="text-3xl mt-4 mb-4 text-white font-semibold">
@@ -42,15 +61,21 @@ const BlogScreen = () => {
                 <Text className="text-xs font-medium">View All</Text>
               </TouchableOpacity>
             </View>
-            <FeaturedBlogsCarousel list={FEATURED_BLOGS} />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("BlogDetails", { blog: item });
+              }}
+            >
+              <FeaturedBlogsCarousel list={featuredBlogs} />
+            </TouchableOpacity>
             <Text className="text-base font-bold my-4">Latest Blog Posts</Text>
           </View>
         }
-        data={LATEST_BLOGS}
+        data={latestBlogs}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View className="px-6">
-            <LatestBlogsCarousel list={LATEST_BLOGS} />
+            <LatestBlogsList item={item} />
           </View>
         )}
       />
