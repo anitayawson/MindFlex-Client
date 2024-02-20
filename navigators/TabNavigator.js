@@ -10,10 +10,18 @@ import BlogsIcon from "../assets/icons/blogs.png";
 import TherapyIcon from "../assets/icons/therapy.png";
 import ForumsIcon from "../assets/icons/forums.png";
 import ExercisesIcon from "../assets/icons/exercises.png";
+import React from "react";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+  const offsetAnimation = React.useRef(new Animated.Value(0)).current;
+
+  const translateX = offsetAnimation.interpolate({
+    inputRange: [0, 1, 2, 3, 4],
+    outputRange: [0, 90, 180, 270, 360], // Adjust these values as needed
+  });
+
   return (
     <>
       <Tab.Navigator
@@ -42,11 +50,14 @@ const TabNavigator = () => {
               return (
                 <Image
                   source={HomeIcon}
-                  className="h-8 w-8"
+                  className="h-7 w-7"
                   style={{ tintColor: focused ? "#4F997E" : "grey" }}
                 />
               );
             },
+          }}
+          listeners={{
+            focus: () => {},
           }}
         />
         <Tab.Screen
@@ -57,7 +68,7 @@ const TabNavigator = () => {
               return (
                 <Image
                   source={BlogsIcon}
-                  className="h-7 w-7"
+                  className="h-6 w-6"
                   style={{ tintColor: focused ? "#4F997E" : "grey" }}
                 />
               );
@@ -72,7 +83,7 @@ const TabNavigator = () => {
               return (
                 <Image
                   source={TherapyIcon}
-                  className="h-8 w-8"
+                  className="h-7 w-7"
                   style={{ tintColor: focused ? "#4F997E" : "grey" }}
                 />
               );
@@ -87,7 +98,7 @@ const TabNavigator = () => {
               return (
                 <Image
                   source={ForumsIcon}
-                  className="h-8 w-8"
+                  className="h-7 w-7"
                   style={{ tintColor: focused ? "#4F997E" : "grey" }}
                 />
               );
@@ -102,7 +113,7 @@ const TabNavigator = () => {
               return (
                 <Image
                   source={ExercisesIcon}
-                  className="h-8 w-8"
+                  className="h-7 w-7"
                   style={{ tintColor: focused ? "#4F997E" : "grey" }}
                 />
               );
