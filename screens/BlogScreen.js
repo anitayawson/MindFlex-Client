@@ -4,7 +4,6 @@ import { FlatList, Text, TouchableOpacity, View, Image } from "react-native";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import FeaturedBlogsCarousel from "../components/FeaturedBlogsCarousel";
 import LatestBlogsList from "../components/LatestBlogsList";
-// import { FEATURED_BLOGS, LATEST_BLOGS } from "../data/index";
 import { useNavigation } from "@react-navigation/native";
 
 const BlogScreen = () => {
@@ -52,22 +51,16 @@ const BlogScreen = () => {
       <FlatList
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
-          <View className="px-6 pt-6">
+          <View className="pl-6 pt-6">
             <View className="flex-row justify-between items-baseline">
               <Text className="text-base font-bold mb-4">
                 Featured Blog Posts
               </Text>
-              <TouchableOpacity className="border-b-2 border-mindflexOrange">
+              <TouchableOpacity className="border-b-2 mr-6 border-mindflexOrange">
                 <Text className="text-xs font-medium">View All</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("BlogDetails", { blog: item });
-              }}
-            >
-              <FeaturedBlogsCarousel list={featuredBlogs} />
-            </TouchableOpacity>
+            <FeaturedBlogsCarousel list={featuredBlogs} />
             <Text className="text-base font-bold my-4">Latest Blog Posts</Text>
           </View>
         }

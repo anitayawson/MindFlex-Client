@@ -15,13 +15,6 @@ import React from "react";
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
-  const offsetAnimation = React.useRef(new Animated.Value(0)).current;
-
-  const translateX = offsetAnimation.interpolate({
-    inputRange: [0, 1, 2, 3, 4],
-    outputRange: [0, 90, 180, 270, 360], // Adjust these values as needed
-  });
-
   return (
     <>
       <Tab.Navigator
