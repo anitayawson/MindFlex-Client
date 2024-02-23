@@ -1,11 +1,23 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { useState } from "react";
+import { View, Text, Image, TouchableOpacity, Modal } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import locationIcon from "../assets/icons/map.png";
 import timeIcon from "../assets/icons/time.png";
 import moneyIcon from "../assets/icons/donate.png";
+import BookingModal from "../components/BookingModal";
 
 const TherapistDetailsScreen = ({ route }) => {
   const { therapists } = route.params;
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const openBookingModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeBookingModal = () => {
+    setModalVisible(false);
+  };
 
   return (
     <View className="pt-16 px-6">
@@ -41,11 +53,23 @@ const TherapistDetailsScreen = ({ route }) => {
       </View>
 
       <Text className="font-light leading-5 my-2">{therapists.bio}</Text>
-      <TouchableOpacity className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-6 h-14 shadow-xl">
+      <TouchableOpacity
+        onPress={openBookingModal}
+        className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-6 h-14 shadow-xl"
+      >
         <Text className="text-white ml-2 font-semibold">
           Book An Appointment
         </Text>
       </TouchableOpacity>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={closeBookingModal}
+      >
+        <BookingModal closeModal={closeBookingModal} therapists={therapists} />
+      </Modal>
     </View>
   );
 };

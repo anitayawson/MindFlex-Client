@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { FlatList, Text, TouchableOpacity, View, Image } from "react-native";
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import FeaturedBlogsCarousel from "../components/FeaturedBlogsCarousel";
 import LatestBlogsList from "../components/LatestBlogsList";
 import { useNavigation } from "@react-navigation/native";
+import PageHeader from "../components/PageHeader";
 
 const BlogScreen = () => {
   const [featuredBlogs, setFeaturedBlogs] = useState([]);
@@ -29,24 +29,10 @@ const BlogScreen = () => {
 
   return (
     <View>
-      <View className="bg-mindflexGreen h-56 rounded-b-3xl px-6">
-        <View className="flex-row justify-between items-center pt-16">
-          <TouchableOpacity onPress={() => {}}>
-            <Ionicons name="menu" size={30} color="#ffffff" />
-          </TouchableOpacity>
-          <View className="flex-row items-center gap-4">
-            <TouchableOpacity className="bg-white/[0.2] p-2 rounded-lg">
-              <Feather name="search" size={24} color="white" />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Text className="text-3xl mt-4 mb-4 text-white font-semibold">
-          Curated BlogSpot
-        </Text>
-        <Text className="text-white">
-          Get the health answers you need from our curated collection.
-        </Text>
-      </View>
+      <PageHeader
+        title="Curated BlogSpot"
+        subtitle="Get the health answers you need from our curated collection."
+      />
 
       <FlatList
         showsVerticalScrollIndicator={false}
