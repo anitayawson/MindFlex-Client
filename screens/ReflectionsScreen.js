@@ -1,7 +1,7 @@
-import React from "react";
+import { Text } from "react-native";
 
 const ReflectionsScreen = () => {
-  return <div>ReflectionsScreen</div>;
+  return <Text>ReflectionsScreen</Text>;
 };
 
 export default ReflectionsScreen;

@@ -1,12 +1,15 @@
 import menuIcon from "../assets/icons/hamburger.png";
 import { Feather } from "@expo/vector-icons";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const PageHeader = ({ title, subtitle }) => {
+  const navigation = useNavigation();
+
   return (
     <View className="bg-mindflexGreen h-52 rounded-b-3xl px-6">
       <View className="flex-row justify-between items-center pt-14">
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity>
           <Image
             source={menuIcon}
             className="w-12 h-12 -m-2"

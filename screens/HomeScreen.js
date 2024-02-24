@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Modal } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons, Feather } from "@expo/vector-icons";
+import menuIcon from "../assets/icons/hamburger.png";
+import profileIcon from "../assets/icons/profile.png";
 import ContentSvg from "../assets/icons/content.svg";
 import HappySvg from "../assets/icons/happy.svg";
 import RelaxedSvg from "../assets/icons/relaxed.svg";
@@ -12,9 +15,17 @@ import TiredSvg from "../assets/icons/tired.svg";
 import SadSvg from "../assets/icons/sad.svg";
 import UnsureSvg from "../assets/icons/unsure.svg";
 import ReflectionModal from "../components/ReflectionModal";
+import SideMenu from "../components/SideMenuModal";
+import Modal from "react-native-modal";
 
 const HomeScreen = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggleSideMenuModal = () => {
+    setModalVisible(!modalVisible);
+  };
 
   const openReflectionModal = () => {
     setModalVisible(true);
@@ -26,16 +37,15 @@ const HomeScreen = () => {
 
   return (
     <View className="flex-1 px-6 pt-16">
-      {/* Header */}
       <View className="flex-row justify-between items-center mb-8">
-        {/* <TouchableOpacity onPress={() => {}}>
-          <Ionicons name="menu" size={30} color="#4F997E" />
-        </TouchableOpacity> */}
+        <TouchableOpacity onPress={toggleSideMenuModal}>
+          <Image source={menuIcon} className="w-12 h-12 -m-2" />
+        </TouchableOpacity>
 
-        {/* <View className="flex-row items-center gap-4">
+        <View className="flex-row items-center gap-4">
           <Ionicons name="notifications" size={26} color="#4F997E" />
-          <View className="w-10 h-10 rounded-full bg-gray-300"></View>
-        </View> */}
+          <Image source={profileIcon} className="w-9 h-9 rounded-full" />
+        </View>
       </View>
 
       <Text className="text-2xl font-semibold mb-4">Welcome Back, User!</Text>
@@ -117,13 +127,24 @@ const HomeScreen = () => {
       </TouchableOpacity>
 
       <Modal
+        className="ml-0 mb-0 mt-0"
+        isVisible={modalVisible}
+        animationIn="slideInLeft"
+        animationOut="slideOutLeft"
+        onBackdropPress={() => setModalVisible(false)}
+        onBackButtonPress={() => setModalVisible(false)}
+      >
+        <SideMenu closeModal={toggleSideMenuModal} />
+      </Modal>
+
+      {/* <Modal
         animationType="slide"
         transparent={true}
-        visible={isModalVisible}
+        visible={modalVisible}
         onRequestClose={closeReflectionModal}
       >
         <ReflectionModal closeModal={closeReflectionModal} />
-      </Modal>
+      </Modal> */}
     </View>
   );
 };

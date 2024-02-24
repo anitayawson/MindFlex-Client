@@ -1,8 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import TabNavigator from "./TabNavigator";
-import BlogDetailsScreen from "../screens/BlogDetailsScreen";
-import TherapistDetailsScreen from "../screens/TherapistDetailsScreen";
+import TabNavigator from "../navigators/TabNavigator";
+import SideMenuNavigator from "./SideMenuNavigator";
 
 const Stack = createStackNavigator();
 
@@ -11,25 +10,14 @@ const MainNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Root"
+          name="Tabs"
           component={TabNavigator}
-          options={{
-            headerShown: false,
-          }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Blog Details"
-          component={BlogDetailsScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Therapist Details"
-          component={TherapistDetailsScreen}
-          options={{
-            headerShown: false,
-          }}
+          name="SideMenu"
+          component={SideMenuNavigator}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

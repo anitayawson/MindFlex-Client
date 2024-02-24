@@ -10,9 +10,9 @@ const TherapistInfoCard = ({ therapists }) => {
       {therapists.map((therapist) => (
         <TouchableOpacity
           key={therapist.id}
-          onPress={() => {
-            navigation.navigate("Therapist Details", { therapists: therapist });
-          }}
+          // onPress={() => {
+          //   navigation.navigate("Therapist Details", { therapists: therapist });
+          // }}
         >
           <View className="bg-[#D9D9D9] w-[165px] h-48 rounded-xl mb-4 flex-col gap-1 items-center py-3">
             <Image

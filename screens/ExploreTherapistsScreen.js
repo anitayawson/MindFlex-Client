@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import SideArrow from "../assets/icons/side_arrow.png";
 import SpecialtiesCarousel from "../components/SpecialtiesCarousel";
 import TherapistInfoCard from "../components/TherapistInfoCard";
-import { ScrollView } from "react-native-gesture-handler";
 import PageHeader from "../components/PageHeader";
 
 const TherapistsScreen = () => {
