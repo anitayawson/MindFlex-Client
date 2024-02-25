@@ -16,7 +16,9 @@ const LoginSignupScreen = () => {
         <Text className="text-center font-bold text-3xl">MindFlex</Text>
       </View>
       {isLogin ? <LoginForm /> : <SignupForm />}
-      <View className="flex-row justify-center mt-20">
+      <View
+        className={`flex-row justify-center ${isLogin ? "mt-20" : "mt-10"}`}
+      >
         <Text>
           {isLogin ? "Don't have an account?" : "Have an account already?"}
         </Text>

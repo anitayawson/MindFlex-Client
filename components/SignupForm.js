@@ -1,4 +1,6 @@
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 import googleIcon from "../assets/icons/google-icon.png";
 import { useNavigation } from "@react-navigation/native";
@@ -14,41 +16,76 @@ const SignupForm = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [signupError, setSignupError] = useState("");
 
   const navigateToHome = () => {
     navigation.navigate("Tabs", {
       screen: "Home",
+      params: {
+        isNewSignup: true,
+        users: {
+          name,
+        },
+      },
     });
   };
 
-  const handleSignUp = () => {
-    if (!name || !email || !password || !confirmPassword) {
-      setIsEmpty(true);
-      setNameError(!name ? "Name is required" : "");
-      setEmailError(!email ? "Email is required" : "");
-      setPasswordError(!password ? "Password is required" : "");
-      setConfirmPasswordError(
-        !confirmPassword ? "Confirm Password is required" : ""
+  const handleSignUp = async () => {
+    try {
+      // Validation checks
+      if (!name || !email || !password || !confirmPassword) {
+        setIsEmpty(true);
+        setNameError(!name ? "Name is required" : "");
+        setEmailError(!email ? "Email is required" : "");
+        setPasswordError(!password ? "Password is required" : "");
+        setConfirmPasswordError(
+          !confirmPassword ? "Confirm Password is required" : ""
+        );
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        setEmailError("Please enter a valid email address");
+        return;
+      }
+
+      if (!validatePassword(password)) {
+        setPasswordError("Password must be at least 8 characters long");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        setPasswordError("Passwords do not match");
+        setConfirmPasswordError("Passwords do not match");
+        return;
+      }
+
+      // Make API request
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/signup",
+        {
+          name,
+          email,
+          password,
+          confirmPassword,
+        }
       );
-    } else if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address");
-      setPasswordError("");
-      setConfirmPasswordError("");
-    } else if (!validatePassword(password)) {
-      setPasswordError("Password must be at least 8 characters long");
-      setEmailError("");
-      setConfirmPasswordError("");
-    } else if (password !== confirmPassword) {
-      setPasswordError("Passwords do not match");
-      setEmailError("");
-      setConfirmPasswordError("Passwords do not match");
-    } else {
-      setIsEmpty(false);
-      setNameError("");
-      setEmailError("");
-      setPasswordError("");
-      setConfirmPasswordError("");
+
+      const { token } = response.data;
+      await AsyncStorage.setItem("token", token);
+      // Save token to AsyncStorage or state
+
+      setName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+
       navigateToHome();
+    } catch (error) {
+      console.error("Signup error:", error);
+      setSignupError(
+        "An error occurred while signing up. Please try again later."
+      );
     }
   };
 
@@ -64,7 +101,10 @@ const SignupForm = () => {
   return (
     <View className="px-12 pt-10">
       <Text className="text-lg mb-6">Create an account</Text>
-      <View className={`flex-col ${isEmpty ? "gap-2" : "gap-y-4"}`}>
+      {signupError && (
+        <Text className="text-red-500 text-xs">{signupError}</Text>
+      )}
+      <View className={`flex-col ${isEmpty ? "gap-1" : "gap-y-4"}`}>
         {isEmpty && nameError && (
           <Text className="text-red-500 text-xs">{nameError}</Text>
         )}

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import menuIcon from "../assets/icons/hamburger.png";
 import profileIcon from "../assets/icons/profile.png";
@@ -20,8 +21,33 @@ import Modal from "react-native-modal";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const [welcomeMessage, setWelcomeMessage] = useState("");
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (route.params?.isNewSignup) {
+      // New signup
+      setWelcomeMessage(`Welcome, new user!`);
+    } else {
+      // Returning user
+      const userId = route.params?.id;
+      if (userId) {
+        axios
+          .get(`http://localhost:8080/api/users/${userId}`)
+          .then((response) => {
+            const userName = response.data.name;
+            setWelcomeMessage(`Welcome Back, ${userName}!`);
+          })
+          .catch((error) => {
+            console.error("Error fetching user data:", error);
+          });
+      } else {
+        setWelcomeMessage("");
+      }
+    }
+  }, [route.params]);
 
   const toggleSideMenuModal = () => {
     setModalVisible(!modalVisible);
@@ -48,7 +74,7 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      <Text className="text-2xl font-semibold mb-4">Welcome Back, User!</Text>
+      <Text className="text-2xl font-semibold mb-4">{welcomeMessage}</Text>
 
       <View>
         <Text className="text-base mt-4">How Are You Feeling Today?</Text>
