@@ -17,22 +17,29 @@ const SideMenuModal = () => {
     navigation.navigate("SideMenu", { screen: screenName });
   };
 
+  const handleLogout = () => {
+    navigation.navigate("Login");
+  };
+
   return (
-    <View className="bg-white h-full w-[70%] rounded pt-20 pl-6">
-      <View className="flex-row mb-10 gap-x-4">
-        <Image source={profileIcon} className="w-9 h-9 rounded-full" />
+    <View className="bg-white h-full w-[70%] rounded py-20 pl-6 flex-col">
+      <View className="flex-row mb-10 gap-x-2 items-center">
+        <Image source={profileIcon} className="w-14 h-14 rounded-full" />
         <View>
           <Text className="font-bold">User Full Name</Text>
           <Text>User Email Address</Text>
         </View>
       </View>
-      <View className="flex-col gap-y-8">
+      <View className="flex-col gap-y-12">
         {buttonNames.map((name, index) => (
           <TouchableOpacity key={index} onPress={() => handleNavigation(name)}>
             <Text>{name}</Text>
           </TouchableOpacity>
         ))}
       </View>
+      <TouchableOpacity onPress={handleLogout} className="mt-auto">
+        <Text>Log Out</Text>
+      </TouchableOpacity>
     </View>
   );
 };
