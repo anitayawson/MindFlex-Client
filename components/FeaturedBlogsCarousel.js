@@ -21,7 +21,10 @@ const FeaturedBlogsCarousel = ({ list }) => {
         return (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Blog Details", { item: item });
+              navigation.navigate("Details", {
+                screen: "Blog Details",
+                params: { item: item },
+              });
             }}
           >
             <View className="bg-[#D9D9D9] mr-3 h-52 w-60 rounded-xl p-2 mt-1 drop-shadow-xl">
