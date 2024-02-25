@@ -18,7 +18,7 @@ const SideMenuModal = () => {
   };
 
   const handleLogout = () => {
-    navigation.navigate("Login");
+    navigation.navigate("LoginSignup");
   };
 
   return (
