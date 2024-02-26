@@ -2,6 +2,20 @@
 
 MindFlex
 
+# Running the app
+
+To run the app, you may need access to an iOS simulator or an actual iOS device.
+
+## Using iOS Simulator (Mac Only)
+
+Install Xcode: If you're using a Mac, you can install Xcode from the Mac App Store.
+
+Open Xcode: Launch Xcode and navigate to Xcode > Preferences > Components to install the iOS simulator component if it's not already installed.
+
+Run the App: After installing Xcode and the iOS simulator component run the following command in the project directory:
+
+`npm run ios` or `npm start` (and then follow the instructions)
+
 ## Overview
 
 MindFlex is a versatile mental health resource app designed to support various needs and stages throughout one's mental health journey. While it facilitates awareness, tracking and education on mental healthcare, MindFlex serves as a valuable tool rather than a complete solution to mental healthcare.
