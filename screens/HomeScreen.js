@@ -5,26 +5,34 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import menuIcon from "../assets/icons/hamburger.png";
 import profileIcon from "../assets/icons/profile.png";
-import ContentSvg from "../assets/icons/content.svg";
-import HappySvg from "../assets/icons/happy.svg";
-import RelaxedSvg from "../assets/icons/relaxed.svg";
-import AngrySvg from "../assets/icons/angry.svg";
-import AnxiousSvg from "../assets/icons/anxious.svg";
-import StressedSvg from "../assets/icons/stressed.svg";
-import GratefulSvg from "../assets/icons/grateful.svg";
-import TiredSvg from "../assets/icons/tired.svg";
-import SadSvg from "../assets/icons/sad.svg";
-import UnsureSvg from "../assets/icons/unsure.svg";
 import ReflectionModal from "../components/ReflectionModal";
 import SideMenu from "../components/SideMenuModal";
 import Modal from "react-native-modal";
+import MoodPicker from "../components/MoodPicker";
+import QuoteImg from "../assets/images/quote_of_the_day.jpeg";
+import ExerciseCards from "../components/ExerciseCards";
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
   const route = useRoute();
   const [welcomeMessage, setWelcomeMessage] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userId, setUserId] = useState(null);
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [sideMenuVisible, setSideMenuVisible] = useState(false);
+  const [reflectionModalVisible, setReflectionModalVisible] = useState(false);
+
+  const toggleSideMenuModal = () => {
+    setSideMenuVisible(!sideMenuVisible);
+  };
+
+  const openReflectionModal = () => {
+    setReflectionModalVisible(true);
+  };
+
+  const closeReflectionModal = () => {
+    setReflectionModalVisible(false);
+  };
 
   useEffect(() => {
     if (route.params?.isNewSignup) {
@@ -37,8 +45,11 @@ const HomeScreen = () => {
         axios
           .get(`http://localhost:8080/api/users/${userId}`)
           .then((response) => {
-            const userName = response.data.name;
-            setWelcomeMessage(`Welcome Back, ${userName}!`);
+            const user = response.data;
+            setUserId(userId);
+            setUserName(user.name);
+            setUserEmail(user.email);
+            setWelcomeMessage(`Welcome Back, ${user.name}!`);
           })
           .catch((error) => {
             console.error("Error fetching user data:", error);
@@ -49,21 +60,9 @@ const HomeScreen = () => {
     }
   }, [route.params]);
 
-  const toggleSideMenuModal = () => {
-    setModalVisible(!modalVisible);
-  };
-
-  const openReflectionModal = () => {
-    setModalVisible(true);
-  };
-
-  const closeReflectionModal = () => {
-    setModalVisible(false);
-  };
-
   return (
     <View className="flex-1 px-6 pt-16">
-      <View className="flex-row justify-between items-center mb-8">
+      <View className="flex-row justify-between items-center mb-4">
         <TouchableOpacity onPress={toggleSideMenuModal}>
           <Image source={menuIcon} className="w-12 h-12 -m-2" />
         </TouchableOpacity>
@@ -77,68 +76,10 @@ const HomeScreen = () => {
       <Text className="text-2xl font-semibold mb-4">{welcomeMessage}</Text>
 
       <View>
-        <Text className="text-base mt-4">How Are You Feeling Today?</Text>
+        <Text className="text-base mt-2">How Are You Feeling Today?</Text>
         {/* Mood Picker */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <View className="flex-row gap-4 mt-1">
-            <TouchableOpacity className="w-16 h-16 rounded-lg bg-mindflexBlue flex justify-center items-center">
-              <ContentSvg width={40} height={50} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="w-16 h-16 rounded-lg bg-mindflexYellow flex justify-center items-center"
-              onPress={() => {}}
-            >
-              <HappySvg width={40} height={50} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="w-16 h-16 rounded-lg bg-mindflexPink flex justify-center items-center"
-              onPress={() => {}}
-            >
-              <RelaxedSvg width={40} height={50} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="w-16 h-16 rounded-lg bg-mindflexLightGreen flex justify-center items-center"
-              onPress={() => {}}
-            >
-              <AngrySvg width={40} height={50} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="w-16 h-16 rounded-lg bg-mindflexLightOrange flex justify-center items-center"
-              onPress={() => {}}
-            >
-              <AnxiousSvg width={40} height={50} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="w-16 h-16 rounded-lg bg-mindflexTeal flex justify-center items-center"
-              onPress={() => {}}
-            >
-              <StressedSvg width={40} height={50} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="w-16 h-16 rounded-lg bg-mindflexPurple flex justify-center items-center"
-              onPress={() => {}}
-            >
-              <GratefulSvg width={40} height={50} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="w-16 h-16 rounded-lg bg-mindflexDarkGreen flex justify-center items-center"
-              onPress={() => {}}
-            >
-              <TiredSvg width={40} height={50} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="w-16 h-16 rounded-lg bg-gray-300 flex justify-center items-center"
-              onPress={() => {}}
-            >
-              <SadSvg width={40} height={50} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="w-16 h-16 rounded-lg bg-gray-300 flex justify-center items-center"
-              onPress={() => {}}
-            >
-              <UnsureSvg width={40} height={50} />
-            </TouchableOpacity>
-          </View>
+          <MoodPicker />
         </ScrollView>
       </View>
 
@@ -152,25 +93,45 @@ const HomeScreen = () => {
         </Text>
       </TouchableOpacity>
 
+      <View className="bg-mindflexBlue flex-row items-center mt-6 h-36 rounded-2xl p-2">
+        <Image source={QuoteImg} className="w-32 h-full rounded-2xl mr-4" />
+        <View className="w-full">
+          <Text className="text-base">Quote of the day</Text>
+          <Text className="text-xs w-48">
+            Phone calls and social networks have their place, but few things can
+            beat the mood-boosting power of quality face-to-face time.
+          </Text>
+        </View>
+      </View>
+
+      <ExerciseCards />
+
       <Modal
         className="ml-0 mb-0 mt-0"
-        isVisible={modalVisible}
+        isVisible={sideMenuVisible}
         animationIn="slideInLeft"
         animationOut="slideOutLeft"
-        onBackdropPress={() => setModalVisible(false)}
-        onBackButtonPress={() => setModalVisible(false)}
+        onBackdropPress={() => setSideMenuVisible(false)}
+        onBackButtonPress={() => setSideMenuVisible(false)}
       >
-        <SideMenu closeModal={toggleSideMenuModal} />
+        <SideMenu
+          closeModal={toggleSideMenuModal}
+          userName={userName}
+          userEmail={userEmail}
+        />
       </Modal>
 
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={closeReflectionModal}
+      <Modal
+        className="mx-0 mb-0"
+        isVisible={reflectionModalVisible}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
       >
-        <ReflectionModal closeModal={closeReflectionModal} />
-      </Modal> */}
+        <ReflectionModal
+          closeReflectionModal={closeReflectionModal}
+          userId={userId}
+        />
+      </Modal>
     </View>
   );
 };

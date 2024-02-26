@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import profileIcon from "../assets/icons/profile.png";
 
-const SideMenuModal = () => {
+const SideMenuModal = ({ userName, userEmail }) => {
   const navigation = useNavigation();
 
   const buttonNames = [
@@ -26,8 +26,8 @@ const SideMenuModal = () => {
       <View className="flex-row mb-10 gap-x-2 items-center">
         <Image source={profileIcon} className="w-14 h-14 rounded-full" />
         <View>
-          <Text className="font-bold">User Full Name</Text>
-          <Text>User Email Address</Text>
+          <Text className="font-bold">{userName}</Text>
+          <Text>{userEmail}</Text>
         </View>
       </View>
       <View className="flex-col gap-y-12">

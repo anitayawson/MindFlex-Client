@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Text,
   View,
@@ -8,10 +9,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 import closeIcon from "../assets/icons/close.png";
 
-const ReflectionModal = ({ closeModal }) => {
+const ReflectionModal = ({ closeReflectionModal, userId }) => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
   const formatCurrentTime = () => {
     const options = {
       month: "long",
@@ -21,6 +26,22 @@ const ReflectionModal = ({ closeModal }) => {
       hour12: true,
     };
     return new Date().toLocaleDateString("en-US", options);
+  };
+
+  const saveReflection = () => {
+    axios
+      .post("http://localhost:8080/api/reflections", {
+        title,
+        content,
+        userId: userId,
+      })
+      .then((response) => {
+        console.log("Reflection saved:", response.data);
+        closeReflectionModal();
+      })
+      .catch((error) => {
+        console.error("Error saving reflection:", error);
+      });
   };
 
   return (
@@ -34,23 +55,27 @@ const ReflectionModal = ({ closeModal }) => {
             <View className="absolute top-0 bottom-0 left-0 right-0 z-1 bg-black/[0.25]" />
 
             <View className="rounded-t-3xl absolute bottom-0 px-6 w-full top-40 bg-white z-10">
-              <TouchableOpacity>
+              <TouchableWithoutFeedback onPress={closeReflectionModal}>
                 <Image
                   source={closeIcon}
-                  className="w-7 h-7 absolute right-0 top-6"
+                  className="w-7 h-7 absolute right-6 top-6 z-50"
                 />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
               <View className="flex-column items-center pt-6 gap-5">
                 <Text className="text-base font-bold">Write a Reflection</Text>
                 <Text className="text-normal">{formatCurrentTime()}</Text>
               </View>
               <View className="border border-solid border-[#A6AA9D] h-3/5 rounded-2xl mt-6">
                 <TextInput
+                  value={title}
+                  onChangeText={(text) => setTitle(text)}
                   className="w-full px-6 py-4 text-base border-b border-solid border-[#A6AA9D]"
                   placeholder="Add a title"
                 />
                 <ScrollView>
                   <TextInput
+                    value={content}
+                    onChangeText={(text) => setContent(text)}
                     className="w-full px-6 pt-4 text-base"
                     placeholder="Take a moment to reflect on your day and how you're feeling. Writing about it can help you process your emotions and track your progress!"
                     multiline
@@ -58,7 +83,7 @@ const ReflectionModal = ({ closeModal }) => {
                 </ScrollView>
               </View>
               <TouchableOpacity
-                onPress={closeModal}
+                onPress={saveReflection}
                 className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-10 h-14 shadow-xl"
               >
                 <Text className="text-white font-semibold">
