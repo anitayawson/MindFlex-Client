@@ -54,7 +54,7 @@ const BookingModal = ({ closeModal, therapists }) => {
   return (
     <View className="flex-1">
       <View className="absolute top-0 bottom-0 left-0 right-0 z-1 bg-black/[0.25]" />
-      <View className="rounded-t-3xl absolute bottom-0 px-6 w-full top-64 bg-white z-10">
+      <View className="rounded-t-3xl absolute bottom-0 px-6 w-full h-3/4 bg-white z-10">
         <TouchableWithoutFeedback onPress={closeModal}>
           <Image
             onPress={closeModal}

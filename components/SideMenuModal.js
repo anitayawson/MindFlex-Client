@@ -8,13 +8,6 @@ const SideMenuModal = ({ closeModal }) => {
   const { user } = useAuth();
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   if (user) {
-  //     console.log("User Name:", user.name);
-  //     console.log("User Email:", user.email);
-  //   }
-  // }, [user]);
-
   const buttonNames = [
     "Home",
     "My Reflections",

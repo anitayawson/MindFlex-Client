@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, Image, TouchableOpacity, Modal } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import locationIcon from "../assets/icons/map.png";
 import timeIcon from "../assets/icons/time.png";
@@ -7,6 +8,7 @@ import moneyIcon from "../assets/icons/donate.png";
 import BookingModal from "../components/BookingModal";
 
 const TherapistDetailsScreen = ({ route }) => {
+  const navigation = useNavigation();
   const { therapists } = route.params;
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -20,8 +22,13 @@ const TherapistDetailsScreen = ({ route }) => {
   };
 
   return (
-    <View className="pt-16 px-6">
-      <MaterialIcons name="arrow-back-ios-new" size={24} color="black" />
+    <View className="pt-16 px-6 flex-1">
+      <TouchableOpacity
+        className="absolute top-16 left-6 z-50"
+        onPress={() => navigation.goBack()}
+      >
+        <MaterialIcons name="arrow-back-ios-new" size={24} color="black" />
+      </TouchableOpacity>
       <View className="flex-col items-center">
         <Image
           className="rounded-full w-28 h-28"
@@ -55,7 +62,7 @@ const TherapistDetailsScreen = ({ route }) => {
       <Text className="font-light leading-5 my-2">{therapists.bio}</Text>
       <TouchableOpacity
         onPress={openBookingModal}
-        className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-6 h-14 shadow-xl"
+        className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-6 h-14 shadow-xl absolute bottom-10 w-full self-center"
       >
         <Text className="text-white ml-2 font-semibold">
           Book An Appointment

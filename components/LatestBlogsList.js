@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { SharedElement } from "react-navigation-shared-element";
 
 const LatestBlogsCarousel = ({ item }) => {
   const [imageError, setImageError] = useState(false);
@@ -20,7 +21,7 @@ const LatestBlogsCarousel = ({ item }) => {
         });
       }}
     >
-      <View className="bg-[#D9D9D9] mr-3 h-48 w-full rounded-xl p-2 mt-1 mb-3 drop-shadow-xl">
+      <View className="bg-white shadow-md mr-3 h-48 w-full rounded-xl p-2 mt-1 mb-3">
         <Image
           source={{
             uri: `http://localhost:8080/${item.thumbnail_image}`,

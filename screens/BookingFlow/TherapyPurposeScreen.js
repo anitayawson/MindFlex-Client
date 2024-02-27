@@ -10,7 +10,7 @@ import backArrow from "../../assets/icons/left-arrow.png";
 
 const TherapyPurposeScreen = ({ onNext, onBack }) => {
   return (
-    <View>
+    <View className="flex-1">
       <TouchableWithoutFeedback onPress={onBack}>
         <Image source={backArrow} className="w-6 h-6 absolute top-6 z-50" />
       </TouchableWithoutFeedback>
@@ -32,7 +32,7 @@ const TherapyPurposeScreen = ({ onNext, onBack }) => {
       />
       <TouchableOpacity
         onPress={onNext}
-        className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-8 h-14 shadow-xl"
+        className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-8 h-14 shadow-xl absolute bottom-10 w-full"
       >
         <Text className="text-white ml-2 font-semibold">
           Continue to Payment
