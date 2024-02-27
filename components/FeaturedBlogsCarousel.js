@@ -27,7 +27,7 @@ const FeaturedBlogsCarousel = ({ list }) => {
               });
             }}
           >
-            <View className="bg-[#D9D9D9] mr-3 h-52 w-60 rounded-xl p-2 mt-1 drop-shadow-xl">
+            <View className="bg-white shadow-lg mr-3 h-52 w-60 rounded-xl p-2 mt-1 drop-shadow-xl">
               <Image
                 source={{
                   uri: `http://localhost:8080/${item.thumbnail_image}`,

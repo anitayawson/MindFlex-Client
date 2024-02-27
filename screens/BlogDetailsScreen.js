@@ -1,8 +1,10 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const BlogDetailsScreen = ({ route }) => {
+  const navigation = useNavigation();
   const { item } = route.params;
 
   const formatLongDate = (dateString) => {
@@ -16,6 +18,12 @@ const BlogDetailsScreen = ({ route }) => {
 
   return (
     <ScrollView>
+      <TouchableOpacity
+        className="absolute top-16 left-6 z-50 bg-white/[0.2] p-2 rounded-lg"
+        onPress={() => navigation.goBack()}
+      >
+        <MaterialIcons name="arrow-back-ios-new" size={24} color="white" />
+      </TouchableOpacity>
       <Image
         source={{
           uri: `http://localhost:8080/${item.thumbnail_image}`,

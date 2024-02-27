@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, Image, TouchableOpacity, Modal } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import locationIcon from "../assets/icons/map.png";
 import timeIcon from "../assets/icons/time.png";
@@ -7,6 +8,7 @@ import moneyIcon from "../assets/icons/donate.png";
 import BookingModal from "../components/BookingModal";
 
 const TherapistDetailsScreen = ({ route }) => {
+  const navigation = useNavigation();
   const { therapists } = route.params;
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -21,7 +23,12 @@ const TherapistDetailsScreen = ({ route }) => {
 
   return (
     <View className="pt-16 px-6">
-      <MaterialIcons name="arrow-back-ios-new" size={24} color="black" />
+      <TouchableOpacity
+        className="absolute top-16 left-6 z-50"
+        onPress={() => navigation.goBack()}
+      >
+        <MaterialIcons name="arrow-back-ios-new" size={24} color="black" />
+      </TouchableOpacity>
       <View className="flex-col items-center">
         <Image
           className="rounded-full w-28 h-28"

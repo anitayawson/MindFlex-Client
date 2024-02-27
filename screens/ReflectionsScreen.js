@@ -46,8 +46,8 @@ const ReflectionsScreen = () => {
         </TouchableOpacity>
       </View>
       <Text className="text-2xl mt-6">My Reflections</Text>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {reflections.length > 0 ? ( // Check if reflections exist
+      {reflections.length > 0 ? ( // Check if reflections exist
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View className="pt-6">
             {reflections
               .slice()
@@ -68,14 +68,14 @@ const ReflectionsScreen = () => {
                 </View>
               ))}
           </View>
-        ) : (
-          <View className="flex-row justify-center items-center h-2/3">
-            <Text className="text-base mt-6 font-semibold">
-              You don't have any reflections yet.
-            </Text>
-          </View>
-        )}
-      </ScrollView>
+        </ScrollView>
+      ) : (
+        <View className="flex-row justify-center items-center h-2/3">
+          <Text className="text-base mt-6 font-semibold">
+            You don't have any reflections yet.
+          </Text>
+        </View>
+      )}
 
       <Image
         source={addIcon}

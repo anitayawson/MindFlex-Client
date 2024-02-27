@@ -1,14 +1,39 @@
-import React from "react";
+import { useState } from "react";
 import {
   Text,
   View,
   TouchableWithoutFeedback,
   Image,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import backArrow from "../../assets/icons/left-arrow.png";
+import { CardField, useStripe } from "@stripe/stripe-react-native";
 
 const BookingPaymentScreen = ({ onNext, onBack, therapists }) => {
+  const [paymentToken, setPaymentToken] = useState("");
+  const { confirmPayment, handleCardAction } = useStripe();
+
+  const handlePaymentSubmission = async () => {
+    try {
+      const { paymentIntent, error } = await confirmPayment({
+        type: "Card",
+        billingDetails: {
+          email: "example@example.com",
+        },
+      });
+
+      if (error) {
+        console.log("Error:", error);
+      } else {
+        console.log("PaymentIntent:", paymentIntent);
+        setPaymentToken(paymentIntent.paymentMethodId);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
   return (
     <View>
       <TouchableWithoutFeedback onPress={onBack}>
