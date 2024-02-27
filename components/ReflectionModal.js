@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "./AuthContext";
 import {
   Text,
   View,
@@ -13,7 +14,8 @@ import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 import closeIcon from "../assets/icons/close.png";
 
-const ReflectionModal = ({ closeReflectionModal, userId }) => {
+const ReflectionModal = ({ closeReflectionModal }) => {
+  const { user, updateUser } = useAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -28,20 +30,26 @@ const ReflectionModal = ({ closeReflectionModal, userId }) => {
     return new Date().toLocaleDateString("en-US", options);
   };
 
-  const saveReflection = () => {
-    axios
-      .post("http://localhost:8080/api/reflections", {
-        title,
-        content,
-        userId: userId,
-      })
-      .then((response) => {
-        console.log("Reflection saved:", response.data);
-        closeReflectionModal();
-      })
-      .catch((error) => {
-        console.error("Error saving reflection:", error);
-      });
+  const saveReflection = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/reflections",
+        {
+          title,
+          content,
+          userId: user.id,
+        }
+      );
+      console.log("Reflection saved:", response.data);
+      closeReflectionModal();
+      // Refetch user data to update user information
+      const userResponse = await axios.get(
+        `http://localhost:8080/api/users/${user.id}`
+      );
+      updateUser(userResponse.data);
+    } catch (error) {
+      console.error("Error saving reflection:", error);
+    }
   };
 
   return (
@@ -76,7 +84,7 @@ const ReflectionModal = ({ closeReflectionModal, userId }) => {
                   <TextInput
                     value={content}
                     onChangeText={(text) => setContent(text)}
-                    className="w-full px-6 pt-4 text-base"
+                    className="w-full px-6 pt-4 text-sm"
                     placeholder="Take a moment to reflect on your day and how you're feeling. Writing about it can help you process your emotions and track your progress!"
                     multiline
                   />

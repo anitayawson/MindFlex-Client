@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useAuth } from "../components/AuthContext";
 import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import menuIcon from "../assets/icons/hamburger.png";
 import profileIcon from "../assets/icons/profile.png";
@@ -13,12 +13,9 @@ import QuoteImg from "../assets/images/quote_of_the_day.jpeg";
 import ExerciseCards from "../components/ExerciseCards";
 
 const HomeScreen = () => {
-  const route = useRoute();
+  const { user } = useAuth();
+  const navigation = useNavigation();
   const [welcomeMessage, setWelcomeMessage] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userId, setUserId] = useState(null);
-
   const [sideMenuVisible, setSideMenuVisible] = useState(false);
   const [reflectionModalVisible, setReflectionModalVisible] = useState(false);
 
@@ -35,30 +32,16 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    if (route.params?.isNewSignup) {
-      // New signup
-      setWelcomeMessage(`Welcome, new user!`);
-    } else {
-      // Returning user
-      const userId = route.params?.id;
-      if (userId) {
-        axios
-          .get(`http://localhost:8080/api/users/${userId}`)
-          .then((response) => {
-            const user = response.data;
-            setUserId(userId);
-            setUserName(user.name);
-            setUserEmail(user.email);
-            setWelcomeMessage(`Welcome Back, ${user.name}!`);
-          })
-          .catch((error) => {
-            console.error("Error fetching user data:", error);
-          });
-      } else {
-        setWelcomeMessage("");
-      }
+    if (user && user.name) {
+      setWelcomeMessage(`Welcome Back, ${user.name}!`);
     }
-  }, [route.params]);
+  }, [user]);
+
+  if (user) {
+    console.log("User Name:", user.name);
+    console.log("User Email:", user.email);
+    // Access other properties as needed
+  }
 
   return (
     <View className="flex-1 px-6 pt-16">
@@ -114,11 +97,7 @@ const HomeScreen = () => {
         onBackdropPress={() => setSideMenuVisible(false)}
         onBackButtonPress={() => setSideMenuVisible(false)}
       >
-        <SideMenu
-          closeModal={toggleSideMenuModal}
-          userName={userName}
-          userEmail={userEmail}
-        />
+        <SideMenu closeModal={toggleSideMenuModal} />
       </Modal>
 
       <Modal
@@ -127,10 +106,7 @@ const HomeScreen = () => {
         animationIn="fadeInUp"
         animationOut="fadeOutDown"
       >
-        <ReflectionModal
-          closeReflectionModal={closeReflectionModal}
-          userId={userId}
-        />
+        <ReflectionModal closeReflectionModal={closeReflectionModal} />
       </Modal>
     </View>
   );

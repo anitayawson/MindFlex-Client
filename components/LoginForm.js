@@ -1,18 +1,25 @@
 import { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "./AuthContext";
+import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 import googleIcon from "../assets/icons/google-icon.png";
-import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 
 const LoginForm = () => {
-  const navigation = useNavigation();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+
   const [isEmpty, setIsEmpty] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [loginError, setLoginError] = useState("");
+  const navigation = useNavigation();
+
+  const navigateToHome = () => {
+    navigation.navigate("Tabs", {
+      screen: "Home",
+    });
+  };
 
   const handleLogin = async () => {
     try {
@@ -36,36 +43,18 @@ const LoginForm = () => {
         return;
       }
 
-      const response = await axios.post(
-        "http://localhost:8080/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
-      const { token, id } = response.data;
-      await AsyncStorage.setItem("token", token);
+      await login({ email, password });
 
       setEmail("");
       setPassword("");
 
-      navigateToHome(id);
+      navigateToHome();
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Login error:", error.message);
       setLoginError(
         "An error occurred while logging you in. Please try again later."
       );
     }
-  };
-
-  const navigateToHome = (id) => {
-    navigation.navigate("Tabs", {
-      screen: "Home",
-      params: {
-        isNewSignup: false,
-        id,
-      },
-    });
   };
 
   const validateEmail = (email) => {
@@ -91,6 +80,7 @@ const LoginForm = () => {
           className={`bg-white shadow-sm h-12 rounded-lg p-4 ${
             isEmpty && !email && " border border-red-500"
           }`}
+          autoCapitalize="none"
           placeholder="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
@@ -102,6 +92,7 @@ const LoginForm = () => {
           className={`bg-white shadow-lg h-12 rounded-lg p-4 ${
             isEmpty && !password && "border border-red-500"
           }`}
+          autoCapitalize="none"
           placeholder="Password"
           secureTextEntry={true}
           value={password}
