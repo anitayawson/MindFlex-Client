@@ -22,7 +22,7 @@ const TherapistDetailsScreen = ({ route }) => {
   };
 
   return (
-    <View className="pt-16 px-6">
+    <View className="pt-16 px-6 flex-1">
       <TouchableOpacity
         className="absolute top-16 left-6 z-50"
         onPress={() => navigation.goBack()}
@@ -62,7 +62,7 @@ const TherapistDetailsScreen = ({ route }) => {
       <Text className="font-light leading-5 my-2">{therapists.bio}</Text>
       <TouchableOpacity
         onPress={openBookingModal}
-        className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-6 h-14 shadow-xl"
+        className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-6 h-14 shadow-xl absolute bottom-10 w-full self-center"
       >
         <Text className="text-white ml-2 font-semibold">
           Book An Appointment
