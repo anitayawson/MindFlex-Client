@@ -1,32 +1,27 @@
 import { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+import { useAuth } from "./AuthContext";
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 import googleIcon from "../assets/icons/google-icon.png";
 import { useNavigation } from "@react-navigation/native";
 
 const SignupForm = () => {
-  const navigation = useNavigation();
+  const { signup } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [signupError, setSignupError] = useState("");
+
   const [isEmpty, setIsEmpty] = useState(false);
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const [signupError, setSignupError] = useState("");
+  const navigation = useNavigation();
 
   const navigateToHome = () => {
     navigation.navigate("Tabs", {
       screen: "Home",
-      params: {
-        isNewSignup: true,
-        users: {
-          name,
-        },
-      },
     });
   };
 
@@ -60,20 +55,7 @@ const SignupForm = () => {
         return;
       }
 
-      // Make API request
-      const response = await axios.post(
-        "http://localhost:8080/api/auth/signup",
-        {
-          name,
-          email,
-          password,
-          confirmPassword,
-        }
-      );
-
-      const { token } = response.data;
-      await AsyncStorage.setItem("token", token);
-      // Save token to AsyncStorage or state
+      await signup({ name, email, password, confirmPassword });
 
       setName("");
       setEmail("");
@@ -82,7 +64,7 @@ const SignupForm = () => {
 
       navigateToHome();
     } catch (error) {
-      console.error("Signup error:", error);
+      console.error("Signup error:", error.message);
       setSignupError(
         "An error occurred while signing up. Please try again later."
       );
@@ -123,6 +105,7 @@ const SignupForm = () => {
           className={`bg-white shadow-sm h-12 rounded-lg p-4 ${
             isEmpty && !email && " border border-red-500"
           }`}
+          autoCapitalize="none"
           placeholder="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
@@ -134,6 +117,7 @@ const SignupForm = () => {
           className={`bg-white shadow-lg h-12 rounded-lg p-4 ${
             isEmpty && !password && "border border-red-500"
           }`}
+          autoCapitalize="none"
           placeholder="Password"
           secureTextEntry={true}
           value={password}
@@ -146,6 +130,7 @@ const SignupForm = () => {
           className={`bg-white shadow-lg h-12 rounded-lg p-4 ${
             isEmpty && !confirmPassword && "border border-red-500"
           }`}
+          autoCapitalize="none"
           placeholder="Confirm Password"
           secureTextEntry={true}
           value={confirmPassword}

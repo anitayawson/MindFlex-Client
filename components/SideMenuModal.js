@@ -1,9 +1,19 @@
+import { useEffect } from "react";
+import { useAuth } from "./AuthContext";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import profileIcon from "../assets/icons/profile.png";
 
-const SideMenuModal = ({ userName, userEmail }) => {
+const SideMenuModal = ({ closeModal }) => {
+  const { user } = useAuth();
   const navigation = useNavigation();
+
+  // useEffect(() => {
+  //   if (user) {
+  //     console.log("User Name:", user.name);
+  //     console.log("User Email:", user.email);
+  //   }
+  // }, [user]);
 
   const buttonNames = [
     "Home",
@@ -14,7 +24,10 @@ const SideMenuModal = ({ userName, userEmail }) => {
   ];
 
   const handleNavigation = (screenName) => {
-    navigation.navigate("SideMenu", { screen: screenName });
+    navigation.navigate("SideMenu", {
+      screen: screenName,
+    });
+    closeModal();
   };
 
   const handleLogout = () => {
@@ -26,8 +39,8 @@ const SideMenuModal = ({ userName, userEmail }) => {
       <View className="flex-row mb-10 gap-x-2 items-center">
         <Image source={profileIcon} className="w-14 h-14 rounded-full" />
         <View>
-          <Text className="font-bold">{userName}</Text>
-          <Text>{userEmail}</Text>
+          <Text className="font-bold">{user?.name}</Text>
+          <Text>{user?.email}</Text>
         </View>
       </View>
       <View className="flex-col gap-y-12">
