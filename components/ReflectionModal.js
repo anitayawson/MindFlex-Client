@@ -40,7 +40,7 @@ const ReflectionModal = ({ closeReflectionModal }) => {
           userId: user.id,
         }
       );
-      console.log("Reflection saved:", response.data);
+      // console.log("Reflection saved:", response.data);
       closeReflectionModal();
       // Refetch user data to update user information
       const userResponse = await axios.get(

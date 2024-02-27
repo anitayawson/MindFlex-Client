@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
       const userData = response.data.user;
       updateUser(userData);
       setUser(userData);
-      console.log("Signup successful, userData:", userData);
+      // console.log("Signup successful, userData:", userData);
       return userData;
     } catch (error) {
       console.error("Signup error:", error.response.data.message);
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       const userData = response.data.user;
       updateUser(userData);
       setUser(userData);
-      console.log("Login successful, userData:", userData);
+      // console.log("Login successful, userData:", userData);
       return userData;
     } catch (error) {
       console.error("Login error:", error.response.data.message);
