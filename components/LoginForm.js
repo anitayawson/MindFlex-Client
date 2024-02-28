@@ -77,7 +77,7 @@ const LoginForm = () => {
           <Text className="text-red-500 text-xs">{emailError}</Text>
         )}
         <TextInput
-          className={`bg-white shadow-sm h-12 rounded-lg p-4 ${
+          className={`bg-white shadow-lg h-12 rounded-lg p-4 ${
             isEmpty && !email && " border border-red-500"
           }`}
           autoCapitalize="none"
@@ -107,7 +107,7 @@ const LoginForm = () => {
       </TouchableOpacity>
 
       <Text className="text-center mt-12">- Or log in with -</Text>
-      <TouchableOpacity className="bg-white shadow-sm h-12  flex-row justify-center items-center rounded-xl mt-6">
+      <TouchableOpacity className="bg-white shadow-lg h-12  flex-row justify-center items-center rounded-xl mt-6">
         <Image source={googleIcon} className="w-8 h-8 mr-2" />
         <Text>Google</Text>
       </TouchableOpacity>

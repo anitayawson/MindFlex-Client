@@ -12,16 +12,52 @@ import UnsureSvg from "../assets/icons/unsure.svg";
 
 const MoodPicker = () => {
   const moodOptions = [
-    { mood: "Content", icon: <ContentSvg width={40} height={50} /> },
-    { mood: "Happy", icon: <HappySvg width={40} height={50} /> },
-    { mood: "Relaxed", icon: <RelaxedSvg width={40} height={50} /> },
-    { mood: "Angry", icon: <AngrySvg width={40} height={50} /> },
-    { mood: "Anxious", icon: <AnxiousSvg width={40} height={50} /> },
-    { mood: "Stressed", icon: <StressedSvg width={40} height={50} /> },
-    { mood: "Grateful", icon: <GratefulSvg width={40} height={50} /> },
-    { mood: "Tired", icon: <TiredSvg width={40} height={50} /> },
-    { mood: "Sad", icon: <SadSvg width={40} height={50} /> },
-    { mood: "Unsure", icon: <UnsureSvg width={40} height={50} /> },
+    {
+      mood: "Content",
+      icon: <ContentSvg width={35} height={35} />,
+      color: "#DCEDF8",
+    },
+    {
+      mood: "Happy",
+      icon: <HappySvg width={35} height={35} />,
+      color: "#FDD6CD",
+    },
+    {
+      mood: "Relaxed",
+      icon: <RelaxedSvg width={35} height={35} />,
+      color: "#FDD6CD",
+    },
+    {
+      mood: "Angry",
+      icon: <AngrySvg width={35} height={35} />,
+      color: "#FDD6CD",
+    },
+    {
+      mood: "Anxious",
+      icon: <AnxiousSvg width={35} height={35} />,
+      color: "#FDD6CD",
+    },
+    {
+      mood: "Stressed",
+      icon: <StressedSvg width={35} height={35} />,
+      color: "#FDD6CD",
+    },
+    {
+      mood: "Grateful",
+      icon: <GratefulSvg width={35} height={35} />,
+      color: "#FDD6CD",
+    },
+    {
+      mood: "Tired",
+      icon: <TiredSvg width={40} height={35} />,
+      color: "#FDD6CD",
+    },
+    { mood: "Sad", icon: <SadSvg width={35} height={35} />, color: "#FDD6CD" },
+    {
+      mood: "Unsure",
+      icon: <UnsureSvg width={35} height={35} />,
+      color: "#FDD6CD",
+    },
   ];
 
   return (
@@ -32,7 +68,7 @@ const MoodPicker = () => {
           className="w-16 h-16 rounded-lg bg-gray-30 flex justify-center items-center"
         >
           {option.icon}
-          <Text className="text-xs">{option.mood}</Text>
+          <Text className="text-xs mt-2">{option.mood}</Text>
         </TouchableOpacity>
       ))}
     </View>

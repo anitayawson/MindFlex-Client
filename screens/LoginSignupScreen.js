@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
 import LoginForm from "../components/LoginForm";
 import SignupForm from "../components/SignupForm";
+import backgroundImage from "../assets/images/login.jpg";
 
 const LoginSignupScreen = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,24 +12,27 @@ const LoginSignupScreen = () => {
   };
 
   return (
-    <View className="pt-28">
-      <View className="">
-        <Text className="text-center font-bold text-3xl">MindFlex</Text>
-      </View>
-      {isLogin ? <LoginForm /> : <SignupForm />}
+    <ImageBackground source={backgroundImage} className="flex-1">
       <View
-        className={`flex-row justify-center ${isLogin ? "mt-20" : "mt-10"}`}
+        className="pt-36"
+        style={{ backgroundImage: "url('../assets/images/login.jpg')" }}
       >
-        <Text>
-          {isLogin ? "Don't have an account?" : "Have an account already?"}
-        </Text>
-        <TouchableOpacity onPress={toggleForm}>
-          <Text className="text-mindflexGreen ml-1">
-            {isLogin ? "Sign up" : "Log in"}
+        <Text className="text-center font-bold text-3xl">MindFlex</Text>
+        {isLogin ? <LoginForm /> : <SignupForm />}
+        <View
+          className={`flex-row justify-center ${isLogin ? "mt-20" : "mt-10"}`}
+        >
+          <Text>
+            {isLogin ? "Don't have an account?" : "Have an account already?"}
           </Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={toggleForm}>
+            <Text className="text-mindflexGreen ml-1">
+              {isLogin ? "Sign up" : "Log in"}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

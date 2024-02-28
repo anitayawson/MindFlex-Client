@@ -40,7 +40,6 @@ const HomeScreen = () => {
   if (user) {
     console.log("User Name:", user.name);
     console.log("User Email:", user.email);
-    // Access other properties as needed
   }
 
   return (

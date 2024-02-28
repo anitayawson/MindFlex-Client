@@ -91,7 +91,7 @@ const SignupForm = () => {
           <Text className="text-red-500 text-xs">{nameError}</Text>
         )}
         <TextInput
-          className={`bg-white shadow-sm h-12 rounded-lg p-4 ${
+          className={`bg-white shadow-lg h-12 rounded-lg p-4 ${
             isEmpty && !name && " border border-red-500"
           }`}
           placeholder="Name"
@@ -102,7 +102,7 @@ const SignupForm = () => {
           <Text className="text-red-500 text-xs">{emailError}</Text>
         )}
         <TextInput
-          className={`bg-white shadow-sm h-12 rounded-lg p-4 ${
+          className={`bg-white shadow-lg h-12 rounded-lg p-4 ${
             isEmpty && !email && " border border-red-500"
           }`}
           autoCapitalize="none"
@@ -114,10 +114,6 @@ const SignupForm = () => {
           <Text className="text-red-500 text-xs">{passwordError}</Text>
         )}
         <TextInput
-          // onFocus={(event) => {
-          //   event.preventDefault();
-          //   // Additional logic if needed
-          // }}
           className={`bg-white shadow-lg h-12 rounded-lg p-4 ${
             isEmpty && !password && "border border-red-500"
           }`}
@@ -149,7 +145,7 @@ const SignupForm = () => {
       </TouchableOpacity>
 
       <Text className="text-center mt-12">- Or sign up with -</Text>
-      <TouchableOpacity className="bg-white shadow-sm h-12  flex-row justify-center items-center rounded-xl mt-6">
+      <TouchableOpacity className="bg-white shadow-lg h-12  flex-row justify-center items-center rounded-xl mt-6">
         <Image source={googleIcon} className="w-8 h-8 mr-2" />
         <Text>Google</Text>
       </TouchableOpacity>
