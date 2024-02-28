@@ -22,6 +22,14 @@ const AppointmentDateScreen = ({ onNext }) => {
 
   const canProceed = selectedDate && selectedTime;
 
+  const handleNext = () => {
+    if (!canProceed) {
+      setAttemptedProceed(true);
+    } else {
+      onNext(selectedDate, selectedTime);
+    }
+  };
+
   return (
     <View className="flex-1">
       <Text className="text-center text-base font-bold mt-6">
@@ -70,13 +78,7 @@ const AppointmentDateScreen = ({ onNext }) => {
         )}
       </ScrollView>
       <TouchableOpacity
-        onPress={() => {
-          if (!canProceed) {
-            setAttemptedProceed(true); // Set attemptedProceed to true when the button is pressed without selecting a day or time
-          } else {
-            onNext(); // Proceed if both a day and a time are selected
-          }
-        }}
+        onPress={handleNext}
         className={`bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-6 h-14 shadow-xl absolute bottom-10 w-full ${
           canProceed ? "" : "opacity-50"
         }`}

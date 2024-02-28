@@ -114,6 +114,10 @@ const SignupForm = () => {
           <Text className="text-red-500 text-xs">{passwordError}</Text>
         )}
         <TextInput
+          // onFocus={(event) => {
+          //   event.preventDefault();
+          //   // Additional logic if needed
+          // }}
           className={`bg-white shadow-lg h-12 rounded-lg p-4 ${
             isEmpty && !password && "border border-red-500"
           }`}

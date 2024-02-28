@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ReflectionsScreen from "../screens/ReflectionsScreen";
 import PaymentScreen from "../screens/PaymentScreen";
 import HomeScreen from "../screens/HomeScreen";
+import TabNavigator from "./TabNavigator";
 
 const Stack = createStackNavigator();
 
@@ -11,7 +12,7 @@ const SideMenuNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Home"
-        component={HomeScreen}
+        component={TabNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen

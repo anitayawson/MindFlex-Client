@@ -15,13 +15,19 @@ import ConfirmationScreen from "../screens/BookingFlow/ConfirmationScreen";
 
 const BookingModal = ({ closeModal, therapists }) => {
   const [currentScreen, setCurrentScreen] = useState("appointmentDate");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
 
   const renderScreen = () => {
     switch (currentScreen) {
       case "appointmentDate":
         return (
           <AppointmentDateScreen
-            onNext={() => setCurrentScreen("therapyPurpose")}
+            onNext={(date, time) => {
+              setSelectedDate(date);
+              setSelectedTime(time);
+              setCurrentScreen("therapyPurpose");
+            }}
           />
         );
       case "therapyPurpose":
@@ -43,6 +49,8 @@ const BookingModal = ({ closeModal, therapists }) => {
         return (
           <ConfirmationScreen
             therapists={therapists}
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
             onBack={() => setCurrentScreen("payment")}
           />
         );
