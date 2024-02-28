@@ -35,6 +35,16 @@ const ReflectionsScreen = () => {
     fetchReflections();
   }, [user.id, updateUser]);
 
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp);
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12 || 12;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    return `${hours}:${minutes}${ampm}`;
+  };
+
   return (
     <View className="pt-16 px-6 flex-1">
       <View className="flex-row items-center justify-between">
@@ -46,8 +56,11 @@ const ReflectionsScreen = () => {
         </TouchableOpacity>
       </View>
       <Text className="text-2xl mt-6">My Reflections</Text>
-      {reflections.length > 0 ? ( // Check if reflections exist
+      {reflections.length > 0 ? (
         <ScrollView showsVerticalScrollIndicator={false}>
+          <View className="border-b-0.5 border-solid border-b-mindflexGreen pb-2">
+            <Text className="text-lg mt-8"> Today </Text>
+          </View>
           <View className="pt-6">
             {reflections
               .slice()
@@ -62,7 +75,7 @@ const ReflectionsScreen = () => {
                   </Text>
                   <Text>{reflection.content}</Text>
                   <View className="flex-row justify-between items-center mt-3">
-                    <Text>{reflection.date}</Text>
+                    <Text>{formatTime(reflection.date)}</Text>
                     <Image source={deleteIcon} className="w-4 h-4" />
                   </View>
                 </View>
