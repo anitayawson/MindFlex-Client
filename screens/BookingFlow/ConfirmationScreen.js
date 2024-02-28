@@ -24,6 +24,20 @@ const ConfirmationScreen = ({
     navigation.navigate("Home");
   };
 
+  const formatDate = (dateString) => {
+    const options = {
+      weekday: "short",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    };
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      "en-US",
+      options
+    );
+    return formattedDate;
+  };
+
   return (
     <View className="flex-1">
       <TouchableWithoutFeedback onPress={onBack}>
@@ -36,11 +50,12 @@ const ConfirmationScreen = ({
         <Image source={checkIcon} className="w-20 h-20" />
       </View>
       <Text className="mt-6 mb-6 text-base text-center font-bold">
-        Your appointment request has received!
+        Your appointment request has been received!
       </Text>
       <View className="flex-col gap-y-2 my-4 items-center">
         <Text className="text-base">
-          <Text className="font-semibold">Date:</Text> {selectedDate}
+          <Text className="font-semibold">Date:</Text>{" "}
+          {formatDate(selectedDate)}
         </Text>
         <Text className="text-base">
           <Text className="font-semibold">Time:</Text> {selectedTime}

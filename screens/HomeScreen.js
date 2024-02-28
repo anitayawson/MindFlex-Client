@@ -67,7 +67,7 @@ const HomeScreen = () => {
 
       <TouchableOpacity
         onPress={openReflectionModal}
-        className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-6 h-14 shadow-xl"
+        className="bg-mindflexGreen flex-row justify-center items-center rounded-xl mt-4 h-14 shadow-xl"
       >
         <Feather name="edit-3" size={22} color="white" />
         <Text className="text-white ml-2 font-semibold">
@@ -75,10 +75,11 @@ const HomeScreen = () => {
         </Text>
       </TouchableOpacity>
 
-      <View className="bg-mindflexBlue flex-row items-center mt-6 h-36 rounded-2xl p-2">
+      <Text className="text-base mt-4 mb-3">Quote of the day</Text>
+
+      <View className="bg-mindflexBlue flex-row items-center h-32 rounded-2xl p-2">
         <Image source={QuoteImg} className="w-32 h-full rounded-2xl mr-4" />
         <View className="w-full">
-          <Text className="text-base">Quote of the day</Text>
           <Text className="text-xs w-48">
             Phone calls and social networks have their place, but few things can
             beat the mood-boosting power of quality face-to-face time.

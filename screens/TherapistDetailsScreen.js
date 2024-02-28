@@ -5,6 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import locationIcon from "../assets/icons/map.png";
 import timeIcon from "../assets/icons/time.png";
 import moneyIcon from "../assets/icons/donate.png";
+import ratingIcon from "../assets/icons/rating.png";
 import BookingModal from "../components/BookingModal";
 
 const TherapistDetailsScreen = ({ route }) => {
@@ -40,7 +41,13 @@ const TherapistDetailsScreen = ({ route }) => {
       </View>
       <View className="mt-4 px-6 flex-row items-center justify-between">
         <Text className="text-sm">{therapists.role}</Text>
-        <Text>{therapists.rating}(121 reviews)</Text>
+        <View className="flex-row items-center">
+          <Image source={ratingIcon} className="w-5 h-5" />
+          <Text>
+            {therapists.rating}
+            <Text className="underline font-light">(121 reviews)</Text>
+          </Text>
+        </View>
       </View>
       <View className="flex-col pt-2 pb-4 gap-y-1">
         <View className="flex-row gap-3 items-center">

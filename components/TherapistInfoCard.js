@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import ratingIcon from "../assets/icons/rating.png";
 import { useNavigation } from "@react-navigation/native";
 
 const TherapistInfoCard = ({ therapists }) => {
@@ -29,7 +30,8 @@ const TherapistInfoCard = ({ therapists }) => {
             <Text className="text-center text-xs font-light">
               {therapist.location}
             </Text>
-            <View>
+            <View className="flex-row">
+              <Image source={ratingIcon} className="w-4 h-4" />
               <Text className="font-bold text-xs">{therapist.rating}</Text>
             </View>
           </View>

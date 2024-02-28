@@ -53,15 +53,16 @@ const BookingPaymentScreen = ({
       <Text className="text-center text-base font-bold mt-6">
         Payment Information
       </Text>
-      <Text className="my-6 text-base">
-        You will be charged ${therapists.price}.00 once your appointment is
-        confirmed.
+      <Text className="mt-6 text-base">
+        You will be charged{" "}
+        <Text className="font-bold">${therapists.price}.00</Text> once your
+        appointment is confirmed.
       </Text>
-      <Text className="mb-6 text-base font-semibold">
+      <Text className="mb-6 mt-3 text-base font-semibold">
         Add a new payment method
       </Text>
       <View>
-        <Text className="mb-1">Name on Card</Text>
+        <Text className="mb-2">Name on Card</Text>
         <TextInput
           value={nameOnCard}
           onChangeText={(text) => setNameOnCard(text)}
@@ -69,7 +70,7 @@ const BookingPaymentScreen = ({
           className="border border-solid border-[#C8D1E1] p-3 rounded-lg focus:border-mindflexGreen"
         />
 
-        <Text className="mb-1 mt-1">16-digit Card Number</Text>
+        <Text className="mb-2 mt-1">16-digit Card Number</Text>
         <TextInput
           value={cardNumber}
           onChangeText={(text) => {
@@ -87,7 +88,7 @@ const BookingPaymentScreen = ({
         />
         <View className="flex-row gap-x-6 mt-1">
           <View className="flex-1">
-            <Text className="mb-1">Expiration date</Text>
+            <Text className="mb-2">Expiration date</Text>
             <TextInput
               value={expiryDate}
               onChangeText={(text) => setExpiryDate(text)}
@@ -96,7 +97,7 @@ const BookingPaymentScreen = ({
             />
           </View>
           <View className="flex-1">
-            <Text className="mb-1">CVV / CVC</Text>
+            <Text className="mb-2">CVV / CVC</Text>
             <TextInput
               value={cvv}
               onChangeText={(text) => setCvv(text)}
@@ -105,7 +106,7 @@ const BookingPaymentScreen = ({
             />
           </View>
         </View>
-        <Text className="mt-2 mb-1">Postal Code</Text>
+        <Text className="mt-2 mb-2">Postal Code</Text>
         <TextInput
           value={postalCode}
           onChangeText={(text) => setPostalCode(text)}
