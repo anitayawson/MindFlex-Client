@@ -14,7 +14,7 @@ import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 import closeIcon from "../assets/icons/close.png";
 
-const ReflectionModal = ({ closeReflectionModal }) => {
+const ReflectionModal = ({ closeReflectionModal, setNotificationVisible }) => {
   const { user, updateUser } = useAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -47,6 +47,7 @@ const ReflectionModal = ({ closeReflectionModal }) => {
         `http://localhost:8080/api/users/${user.id}`
       );
       updateUser(userResponse.data);
+      setNotificationVisible(true);
     } catch (error) {
       console.error("Error saving reflection:", error);
     }

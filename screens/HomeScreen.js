@@ -9,8 +9,10 @@ import ReflectionModal from "../components/ReflectionModal";
 import SideMenu from "../components/SideMenuModal";
 import Modal from "react-native-modal";
 import MoodPicker from "../components/MoodPicker";
-import QuoteImg from "../assets/images/quote_of_the_day.jpeg";
+import meetupIcon from "../assets/images/meetup.png";
+import notificationIcon from "../assets/icons/notification.png";
 import ExerciseCards from "../components/ExerciseCards";
+import ReflectionNotificationModal from "../components/ReflectionNotificationModal";
 
 const HomeScreen = () => {
   const { user } = useAuth();
@@ -18,6 +20,7 @@ const HomeScreen = () => {
   const [welcomeMessage, setWelcomeMessage] = useState("");
   const [sideMenuVisible, setSideMenuVisible] = useState(false);
   const [reflectionModalVisible, setReflectionModalVisible] = useState(false);
+  const [notificationVisible, setNotificationVisible] = useState(false);
 
   const toggleSideMenuModal = () => {
     setSideMenuVisible(!sideMenuVisible);
@@ -29,6 +32,10 @@ const HomeScreen = () => {
 
   const closeReflectionModal = () => {
     setReflectionModalVisible(false);
+  };
+
+  const handleNotificationDismiss = () => {
+    setNotificationVisible(false);
   };
 
   useEffect(() => {
@@ -50,7 +57,7 @@ const HomeScreen = () => {
         </TouchableOpacity>
 
         <View className="flex-row items-center gap-4">
-          <Ionicons name="notifications" size={26} color="#4F997E" />
+          <Image source={notificationIcon} className="w-8 h-8" />
           <Image source={profileIcon} className="w-9 h-9 rounded-full" />
         </View>
       </View>
@@ -77,14 +84,12 @@ const HomeScreen = () => {
 
       <Text className="text-base mt-4 mb-3">Quote of the day</Text>
 
-      <View className="bg-mindflexBlue flex-row items-center h-32 rounded-2xl p-2">
-        <Image source={QuoteImg} className="w-32 h-full rounded-2xl mr-4" />
-        <View className="w-full">
-          <Text className="text-xs w-48">
-            Phone calls and social networks have their place, but few things can
-            beat the mood-boosting power of quality face-to-face time.
-          </Text>
-        </View>
+      <View className="bg-[#ffe2c3] flex-row items-center p-2 justify-between rounded-2xl">
+        <Image source={meetupIcon} className="w-28 h-28 ml-3" />
+        <Text className="w-48">
+          Phone calls and social networks have their place, but few things can
+          beat the mood-boosting power of quality face-to-face time.
+        </Text>
       </View>
 
       <ExerciseCards />
@@ -106,7 +111,18 @@ const HomeScreen = () => {
         animationIn="fadeInUp"
         animationOut="fadeOutDown"
       >
-        <ReflectionModal closeReflectionModal={closeReflectionModal} />
+        <ReflectionModal
+          closeReflectionModal={closeReflectionModal}
+          setNotificationVisible={setNotificationVisible}
+        />
+      </Modal>
+      <Modal
+        className="mx-0"
+        isVisible={notificationVisible}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+      >
+        <ReflectionNotificationModal />
       </Modal>
     </View>
   );

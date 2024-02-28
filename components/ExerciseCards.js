@@ -8,10 +8,10 @@ import breaks from "../assets/images/take-breaks.jpg";
 
 const ExerciseCards = () => {
   return (
-    <View className="mt-6">
+    <View className="mt-4">
       <Text className="text-base">Recommended Activities for you</Text>
       <View className="flex-row mt-3 gap-x-2 h-40">
-        <TouchableOpacity className="bg-mindflexYellow p-2 rounded-2xl flex-1">
+        <TouchableOpacity className="bg-[#E0EAD7] p-2 rounded-2xl flex-1">
           <Image source={breaks} className="w-full h-24 rounded-xl" />
           <View className="flex-row justify-between items-center">
             <Text>Take Short Breaks</Text>
@@ -28,7 +28,7 @@ const ExerciseCards = () => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity className="bg-mindflexPink p-2 rounded-2xl flex-1">
+        <TouchableOpacity className="bg-mindflexYellow p-2 rounded-2xl flex-1">
           <Image source={gratitudeImg} className="w-full h-24 rounded-xl" />
           <View className="flex-row justify-between items-center">
             <Text>Practice Gratitude</Text>
